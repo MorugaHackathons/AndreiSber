@@ -4,6 +4,8 @@
 
 ### Sber Andrei is a web application with a built-in assistant designed to streamline the work of underwriters.
 
+## Design & Concept Art can be found [here](https://www.figma.com/file/9m8yLvrK7TpGUMcwFGYWgP/Hack-Change?type=design&node-id=0%3A1&mode=design&t=Mcz90KWZ3LZLYvqo-1)
+
 ## Project Structure
 
 The project consists of two main components:
