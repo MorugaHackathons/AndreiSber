@@ -47,7 +47,7 @@ pip install -r requirements.txt
 Start the FastAPI application:
 
 ```bash
-    uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 The API will be accessible at http://localhost:8000.
@@ -58,14 +58,12 @@ To build and deploy the project using Docker, follow these steps:
 #### Build the Docker image:
 
 ```bash
-
 docker build -t sber-andrei .
 ```
 #### Run the Docker container:
 
 ```bash
-
-    docker run -p 3000:3000 -p 8000:8000 sber-andrei
+docker run -p 3000:3000 -p 8000:8000 sber-andrei
 ```
 
 The client application will be accessible at http://localhost:3000, and the API will be accessible at http://localhost:8000.
