@@ -8,7 +8,13 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const Assistant = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([
+        {"text": "Привет, как тебя зовут?", "sender": "user"}, 
+    {"text": "Зрдавствуйте, меня зовут Кирилл!", "sender": "system"},
+    {"text": "Крутое имя! Я Саня.", "sender": "user"}, 
+    {"text": "Ваше имя могло быть и получше.", "sender": "system"}, 
+
+]);
     const [newMessage, setNewMessage] = useState('');
     const [gigachatResponse, setGigachatResponse] = useState(null);
 
@@ -37,7 +43,7 @@ const Assistant = () => {
         const token =
             "eyJjdHkiOiJqd3QiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.Ec6AKsX97ODLpm8cttqftDQM_8HBGXqTbHXPzhx3SneF7Fqa1wN2ram1nV9zdBefvSE1LLLT-b2-CDjmw7D2GF8eH9QEO9_2LV0cjPRsqaAapF-STdPXO1LiMdWrUIKhzUVdYerWbmgdScPyrOPWa7Fdq-Sbg4sgY598kXMcoymwDYd5DQO-BHXyXWc5pjJs1XKET7HvxkGetL7fGk6GUj73Ds-x8isQVHh1LRd-VklBDm1uIEbmqdzjzozPv-YOE92bRiKEqkOfpOnskDtuWyfTLeHcEejsid27mpcEciSmO5Yf_xbZFR1mnkjJyEj7PzUTk1Ym2UyzFv81jbSNVw.iFIPFqeGoitnjRnBfKh4_A.BhNd3Os5z1KIB1mKlXmIsVgroEgFNfBUAubL7TX4wghX834v_l2iar02cML_eVvl0OjvuUQ8eLZSiT_dlUHMaRPJTVEuCKVz_OTBPWO1ovLw15HbIVH_Dr5A3UHSqVlNmATn70Z4I4Jo0Lm9hTDjeEGG7FPjqzzTb2gXHFQnCpPFtk0SIz819Fxmku2BKUMb6OJcdmJwn4T0z2WWFYsgXDEZLBRsfav_9rbFYGu0TQz9Pp6nK2fEai0jRxATZNVD9vTB3QDnt8I642IrWl3ZzHFuSWiEWe1fy4fKa7eZwoyzZiaelodZHo-cO_4bTrr929lMcMlMC0e72mB4w_rp_2QRQKG7t9ANYgTZk6_-rl0KQy-uIytKOPsAA_kgT7jmHMJEiQlTbjUzcAExdsHYrp7DOOCd5VI1FHJoTfh1J2qAJK87l_MJISY5LPDA_CgTlUmtmMS_czC2xExvDfZIdryFNsUzLXjieQ6zzT0-bXpG1di9FdP3S8Zf7YkxXO5EilrDCMOCHAJvNuInjwVI80CSTF8aSTKMALVKfIML_FhPIuimoyyMOsnGU6nA9AlMmVThZtm5JMbHU7Bkw8G2fbj7FbXub7r7Ba8TzczqMG3_VZfhnxE6Dg4s4sx7o8aFuaD4AlmXUf8I81_2MBQpeTSeODnZJelKgSUqAH-v1MmxQzVd5xYSI2cSnPE93I5AZDvgjdRRU0Pv8N6NHQ0wDXGJ9Z2txXELyZMfHFTZweI.4SAG7NTRF9HQ40-kwSJzHrcLNZgZLybseSY5lrBCc0E";
         const userMessage = usrMessage;
-        const systemMessage = "Тебя зовут Андрей, тебе 20 лет, и ты ассистент Андеррайтера при проверке документов и одобрении кредита. Если в конце собщения стоит ВАЖНО, значит ответ надо дать в любом случае, с учётом имеющейся информации и факторов";
+        const systemMessage = "Тебя зовут Кирилл, и ты ассистент Андеррайтера при проверке документов и одобрении кредита. Если в конце собщения стоит ВАЖНО, значит ответ надо дать в любом случае, с учётом имеющейся информации и факторов";
 
         const url = "http://localhost:8000/process_messages";
         const headers = {
@@ -93,8 +99,9 @@ const Assistant = () => {
     return (
         <div className={`assistant ${isDialogOpen ? 'open' : ''}`}>
             {isDialogOpen && (
+                <div className="test">
                 <div className="dialog-box" ref={dialogRef}>
-                    <div className="greeting">Андрей</div>
+                    <div className="greeting">Кирилл</div>
                     <div className="message-container">
                         {messages.map((message, index) => (
                             <div key={index} className={`message ${message.sender}`}>
@@ -112,6 +119,7 @@ const Assistant = () => {
                         />
                         <img src={sendIcon} alt="Send" className="send-icon" onClick={handleSendMessage} />
                     </div>
+                </div>
                 </div>
             )}
             <div onClick={handleAssistantClick} className="assistant-logo">
