@@ -18,8 +18,8 @@ const NavigationMenu = () => {
             <Link to="/" className={`menu-item`} onClick={() => handleMenuItemClick('/')}>
                 <span className={activeMenuItem === '/' ? 'active' : ''}>Главная</span>
             </Link>
-            <Link to="/applications" className={`menu-item`} onClick={() => handleMenuItemClick('/applications')}>
-                <span className={activeMenuItem === '/applications' ? 'active' : ''}>Заявки</span>
+            <Link to="/tasks" className={`menu-item`} onClick={() => handleMenuItemClick('/applications')}>
+                <span className={activeMenuItem === '/tasks' ? 'active' : ''}>Задачи</span>
             </Link>
             <Link to="/support" className={`menu-item`} onClick={() => handleMenuItemClick('/support')}>
                 <span className={activeMenuItem === '/support' ? 'active' : ''}>Поддержка</span>
@@ -28,7 +28,7 @@ const NavigationMenu = () => {
                 <span className={activeMenuItem === '/chat' ? 'active' : ''}>Чат</span>
             </Link>
 
-            <div className="spacer" />
+            <div className="spacer"/>
 
             <Link to="/logout" className={`logout-text`} onClick={() => handleMenuItemClick('/logout')}>
                 <span className={activeMenuItem === '/logout' ? 'active' : ''}>Выйти</span>
