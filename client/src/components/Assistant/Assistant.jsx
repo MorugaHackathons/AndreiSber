@@ -3,16 +3,14 @@ import salut from "../../assets/salut.svg";
 import sendIcon from "../../assets/send.svg";
 import axios from 'axios';
 import './Assistant.scss';
+import {json} from "react-router-dom";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const Assistant = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [messages, setMessages] = useState([
-        {"text": "Привет, как тебя зовут?", "sender": "user"}, 
-    {"text": "Зрдавствуйте, меня зовут Кирилл!", "sender": "system"},
-    {"text": "Крутое имя! Я Саня.", "sender": "user"}, 
-    {"text": "Ваше имя могло быть и получше.", "sender": "system"}, 
+
 
 ]);
     const [newMessage, setNewMessage] = useState('');
@@ -45,7 +43,7 @@ const Assistant = () => {
         const userMessage = usrMessage;
         const systemMessage = "Тебя зовут Кирилл, и ты ассистент Андеррайтера при проверке документов и одобрении кредита. Если в конце собщения стоит ВАЖНО, значит ответ надо дать в любом случае, с учётом имеющейся информации и факторов";
 
-        const url = "http://localhost:8000/process_messages";
+        const url = "http://51.250.111.118/onboarding/api/v1/chat";
         const headers = {
             "Access-Control-Allow-Credentials": "true",
             "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
@@ -85,6 +83,51 @@ const Assistant = () => {
         }
     };
 
+    const sendMessage = async (message) => {
+        message = newMessage
+        setNewMessage("")
+        console.log(message)
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZGJlMTVkOC1jYzQyLTRjNzMtYTA3ZC0yZjdjNDFjOWQ0YzMiLCJleHAiOjE3MDE2NDAyMzguMjIwNTIxLCJqdGkiOiJiNGZlODEyZC1jZDIxLTRhY2ItOTkwOC05YmIwNWFmZTQ0NTgiLCJlbWFpbCI6InRlc3RAbWFpbC5ydSJ9.vTDTYpnVC33uFZ_6B5pMThxK0-vkQpGacUw-xYqSM38"
+        const apiUrl = 'http://51.250.111.118/onboarding/api/v1/chat';
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    "Accept": "*/*",
+                    "Access-Control-Allow-Credentials": "true",
+                    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    "Allow": "GET, POST",
+                    "X-Frame-Options": "SAMEORIGIN",
+                    "X-XSS-Protection": "1; mode=block",
+                    "X-Content-Type-Options": "nosniff",
+                },
+                body: JSON.stringify({
+                    message: message,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+
+            const jsonResponse = await response.json();
+            console.log('Response:', jsonResponse["answer"]['message']);
+            setMessages([
+                ...messages,
+                { text: message, sender: 'user' },
+                { text: jsonResponse["answer"]['message'], sender: 'system' },
+            ]);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+
     const handleInputChange = (event) => {
         setNewMessage(event.target.value);
     };
@@ -117,7 +160,7 @@ const Assistant = () => {
                             value={newMessage}
                             onChange={handleInputChange}
                         />
-                        <img src={sendIcon} alt="Send" className="send-icon" onClick={handleSendMessage} />
+                        <img src={sendIcon} alt="Send" className="send-icon" onClick={sendMessage} />
                     </div>
                 </div>
                 </div>

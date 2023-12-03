@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import './App.scss';
 import { BrowserRouter } from 'react-router-dom';
 import NavigationMenu from "./components/NavigationMenu/NavigationMenu";
@@ -5,7 +6,6 @@ import Header from "./components/Header/Header";
 import Assistant from "./components/Assistant/Assistant";
 import TaskList from './components/TaskList/TaskList';
 import Task from "./components/Task/Task";
-import {useState} from "react";
 
 function App() {
 
@@ -22,27 +22,27 @@ function App() {
     {"name": "Task4", "time": "4 hours", "status": "3"},
     {"name": "Task4", "time": "4 hours", "status": "1"},
     {"name": "Task4", "time": "4 hours", "status": "0"},
-  {"name": "Task4", "time": "4 hours", "status": "0"},
-  {"name": "Task4", "time": "4 hours", "status": "2"},
-  {"name": "Task4", "time": "4 hours", "status": "3"},
-  {"name": "Task4", "time": "4 hours", "status": "3"},
+    {"name": "Task4", "time": "4 hours", "status": "0"},
+    {"name": "Task4", "time": "4 hours", "status": "2"},
+    {"name": "Task4", "time": "4 hours", "status": "3"},
+    {"name": "Task4", "time": "4 hours", "status": "3"},
   ]
 
-  const [tasks, setTasks] = useState(tasks1);
-  const [sortedTasks, setSortedTasks] = useState(tasks1);
+  const [search, setSearch] = useState('');
 
-  const updateTasks = (newTasks) => {
-    setTasks(newTasks);
-    setSortedTasks(newTasks);
+  const handleSearch = (value) => {
+    setSearch(value);
   };
 
+  const filteredTasks = tasks1.filter(task => task.name.toLowerCase().includes(search.toLowerCase()));
+
   return (
-    <div className="App">
-      <NavigationMenu/>
-      <Header tasks={tasks} setSortedTasks={setSortedTasks} />
-      <Assistant/>
-        <TaskList tasks={tasks1} />
-    </div>
+      <div className="App">
+        <NavigationMenu/>
+        <Header onSearch={handleSearch}/>
+        <Assistant/>
+        <TaskList tasks={filteredTasks} />
+      </div>
   );
 }
 
