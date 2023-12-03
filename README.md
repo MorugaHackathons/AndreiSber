@@ -30,7 +30,7 @@ npm install
 Start the development server:
 
 ```bash
-    npm start
+npm start
 ```
 
 The client application will be accessible at http://localhost:3000.
